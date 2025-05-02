@@ -11,8 +11,9 @@ import { Label } from "@/components/ui/label"
 import { Github } from "lucide-react"
 import googleIcon from "@/images/icons/google.svg"
 import { signIn } from "next-auth/react"
+import { redirect } from "next/navigation"
 
-export default function SignInForm({errorMessage}: {errorMessage: string}) {
+export default function SignInForm({ errorMessage, callbackUrl }: { errorMessage: string, callbackUrl: string }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(true)
@@ -23,24 +24,22 @@ export default function SignInForm({errorMessage}: {errorMessage: string}) {
         e.preventDefault()
         setError("")
         setLoading("Signing...")
-        try {
-            // Sign in
-            const signInResponse = await signIn("credentials", {
-                email,
-                password,
-                redirect: false,
-                callbackUrl: "/",
-            });
-            console.log(signInResponse)
 
-            if (signInResponse?.error) {
-                setError(signInResponse.error);
-            }
+        // Sign in
+        const signInResponse = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+            callbackUrl: callbackUrl
+        });
+
+        if (signInResponse?.error) {
+            setError(signInResponse.error);
             setLoading("")
-        } catch (err) {
-            setError("An unexpected error occurred");
-            setLoading("")
+            return;
         }
+        setLoading("")
+        redirect(callbackUrl)
     }
 
     return (
@@ -140,7 +139,7 @@ export default function SignInForm({errorMessage}: {errorMessage: string}) {
                 <div className="grid grid-cols-1 gap-3">
                     <Button
                         variant="outline"
-                        className="flex items-center justify-center space-x-2 border border-gray-300 dark:border-gray-700 dark:text-white cursor-pointer"
+                        className="flex items-center justify-center space-x-2 border border-gray-300 dark:border-gray-700 dark:text-white cursor-pointer duration-[0]"
                     >
                         <img src={googleIcon.src} alt="google icon" />
                         <span>Google</span>

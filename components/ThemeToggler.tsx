@@ -4,6 +4,7 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
 import { useEffect, useState } from "react"
+import { signOut } from "next-auth/react"
 
 export default function ThemeToggler() {
     const { theme, setTheme } = useTheme()
@@ -19,14 +20,23 @@ export default function ThemeToggler() {
     }
 
     return (
-        <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label="Toggle theme"
-            className="cursor-pointer"
-        >
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-        </Button>
+        <>
+            <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label="Toggle theme"
+                className="cursor-pointer duration-[0]"
+            >
+                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+            <Button
+                variant="outline"
+                onClick={() => signOut()}
+                className="cursor-pointer duration-[0]"
+            >
+                Sign out
+            </Button>
+        </>
     )
 }

@@ -18,7 +18,7 @@ export const authOptions: AuthOptions = {
 
                 try {
                     if (!credentials || !email || !password) {
-                        throw new Error("Email or password is invalid");
+                        throw new Error("Missing credentials");
                     }
 
                     await connectMongoDB();
