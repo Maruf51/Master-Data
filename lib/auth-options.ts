@@ -45,5 +45,35 @@ export const authOptions: AuthOptions = {
     session: {
         strategy: "jwt",
     },
+    callbacks: {
+        async jwt({ token, account, profile }) {
+            // If this is a Google sign-in
+            if (account?.provider === "google") {
+                await connectMongoDB();
+                console.log(profile)
+
+                // Check if the user exists in the database
+                let user = await User.findOne({ email: profile?.email });
+
+                if (!user) {
+                    // If the user doesn't exist, create a new user
+                    user = await User.create({
+                        name: profile?.name,
+                        email: profile?.email,
+                        image: (profile as { picture?: string })?.picture,
+                        auth: "google"
+                    });
+                } else {
+                    await user.save();
+                }
+
+                // Add custom fields to the token
+                token.id = user._id.toString();
+                token.status = user.status;
+            }
+
+            return token;
+        },
+    },
     secret: process.env.NEXTAUTH_SECRET,
 };

@@ -24,6 +24,6 @@ export async function middleware(req: NextRequest) {
 // Apply middleware to all routes except static files
 export const config = {
     matcher: [
-        "/((?!_next/static|_next/image|favicon.ico|api/auth).*)",
+        "/((?!_next/static|_next/image|favicon.ico|api).*)",
     ],
 };

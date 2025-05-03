@@ -140,6 +140,7 @@ export default function SignInForm({ errorMessage, callbackUrl }: { errorMessage
                     <Button
                         variant="outline"
                         className="flex items-center justify-center space-x-2 border border-gray-300 dark:border-gray-700 dark:text-white cursor-pointer duration-[0]"
+                        onClick={() => signIn("google", { callbackUrl })}
                     >
                         <img src={googleIcon.src} alt="google icon" />
                         <span>Google</span>

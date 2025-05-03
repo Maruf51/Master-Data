@@ -11,11 +11,19 @@ const userScheme = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: false
+        required: function () {
+            return this.auth === 'credentials';
+        }
     },
     image: {
         type: String,
         required: false
+    },
+    auth: {
+        type: String,
+        enum: ['credentials', 'google'],
+        required: true,
+        default: 'credentials'
     }
 }, {
     timestamps: true,
