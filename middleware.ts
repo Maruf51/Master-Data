@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
     // Allow access to /signin and /register pages without authentication
-    if (!token && (req.nextUrl.pathname === "/signin" || req.nextUrl.pathname === "/register")) {
+    if (!token && (req.nextUrl.pathname === "/signin" || req.nextUrl.pathname === "/register" || req.nextUrl.pathname === "/forgot-password")) {
         return NextResponse.next();
     }
 

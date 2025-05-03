@@ -4,11 +4,13 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
 import { useEffect, useState } from "react"
-import { signOut } from "next-auth/react"
+import { getSession, signOut, useSession } from "next-auth/react"
 
 export default function ThemeToggler() {
     const { theme, setTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
+    const session = useSession()
+    const { status } = session;
 
     // Avoid hydration mismatch
     useEffect(() => {
@@ -30,13 +32,25 @@ export default function ThemeToggler() {
             >
                 {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-            <Button
-                variant="outline"
-                onClick={() => signOut()}
-                className="cursor-pointer duration-[0]"
-            >
-                Sign out
-            </Button>
+            {
+                status === "authenticated" ?
+                    <Button
+                        variant="outline"
+                        onClick={() => signOut()}
+                        className="cursor-pointer duration-[0]"
+                    >
+                        Sign out
+                    </Button>
+                    :
+                    <a href="/signin">
+                        <Button
+                            variant="outline"
+                            className="cursor-pointer duration-[0]"
+                        >
+                            Sign in
+                        </Button>
+                    </a>
+            }
         </>
     )
 }
