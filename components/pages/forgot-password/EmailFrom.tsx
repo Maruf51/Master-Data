@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ForgotPasswordAction, ForgotPasswordState } from "@/types/types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 
 interface PropsTypes {
@@ -14,10 +14,13 @@ interface PropsTypes {
 }
 const EmailForm = ({ state, dispatch, handleSendOTP }: PropsTypes) => {
 
-    const { activeSection, email, error, loading } = state
+    const { email, error, loading } = state
 
+    useEffect(() => {
+        dispatch({ type: "SET_ERROR", payload: "" })
+    }, [])
     return (
-        <div className={twMerge("p-8 space-y-6", activeSection !== "email" && "hidden")}>
+        <div className={twMerge("p-8 space-y-6 pb-0 email")}>
             <div className="flex flex-col items-center space-y-6">
                 {/* Logo */}
                 <div className="text-indigo-600 dark:text-indigo-400">
@@ -49,6 +52,7 @@ const EmailForm = ({ state, dispatch, handleSendOTP }: PropsTypes) => {
                         value={email}
                         onChange={(e) => dispatch({ type: "SET_EMAIL", payload: e.target.value })}
                         required
+                        placeholder="Email *"
                         className="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     />
                 </div>

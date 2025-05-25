@@ -4,17 +4,18 @@ import { Button } from "@/components/ui/button"
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
 import { ForgotPasswordAction, ForgotPasswordState } from "@/types/types"
 import { ArrowLeft } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 
 interface PropsTypes {
     state: ForgotPasswordState;
     dispatch: React.Dispatch<ForgotPasswordAction>;
     handleSendOTP: (e: React.FormEvent) => void;
+    handleNextStep: () => void;
 }
-const OTPForm = ({ state, dispatch, handleSendOTP }: PropsTypes) => {
+const OTPForm = ({ state, dispatch, handleSendOTP, handleNextStep }: PropsTypes) => {
 
-    const { activeSection, email, error, loading } = state
+    const { email, error, loading } = state
     const [value, setValue] = useState("")
 
     const handleVerifyOTP = async (e: React.FormEvent) => {
@@ -37,16 +38,16 @@ const OTPForm = ({ state, dispatch, handleSendOTP }: PropsTypes) => {
             return;
         }
 
+        handleNextStep()
         dispatch({ type: "SET_LOADING", payload: "" });
-        dispatch({ type: "SET_SECTION", payload: "password" });
     };
 
+    useEffect(() => {
+        dispatch({ type: "SET_ERROR", payload: "" })
+    }, [])
+
     return (
-        <div className={twMerge("p-8 space-y-6", activeSection !== "otp" && "hidden")}>
-            <div onClick={() => dispatch({ type: "SET_SECTION", payload: "email" })} className="flex items-center gap-3 cursor-pointer w-min">
-                <ArrowLeft />
-                <p className=" whitespace-nowrap">Change email</p>
-            </div>
+        <div className={twMerge("p-8 pb-5 space-y-6 otp")}>
             <div className="flex flex-col items-center space-y-6">
                 {/* Logo */}
                 <div className="text-indigo-600 dark:text-indigo-400">

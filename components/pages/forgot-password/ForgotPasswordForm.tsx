@@ -6,12 +6,12 @@ import { useReducer, useState } from 'react'
 import OTPForm from './OTPForm'
 import { ForgotPasswordAction, ForgotPasswordState } from '@/types/types'
 import ChangePassword from './ChangePassword'
+import Stepper, { Step } from '@/components/Stepper'
 
 export const initialState: ForgotPasswordState = {
     email: "",
     error: "",
     loading: "",
-    activeSection: "email",
 };
 
 export function forgotPasswordReducer(
@@ -25,8 +25,6 @@ export function forgotPasswordReducer(
             return { ...state, error: action.payload };
         case "SET_LOADING":
             return { ...state, loading: action.payload };
-        case "SET_SECTION":
-            return { ...state, activeSection: action.payload };
         case "RESET":
             return initialState;
         default:
@@ -39,6 +37,19 @@ interface Props { }
 
 const ForgotPasswordForm: NextPage<Props> = ({ }) => {
     const [state, dispatch] = useReducer(forgotPasswordReducer, initialState);
+    const [activeNextStep, setActiveNextStep] = useState<number>(1)
+    const [previousBtnName, setPreviousBtnName] = useState<string>("Change email")
+    const [step, setStep] = useState<number>(1)
+
+    const handleNextStep = () => {
+        setActiveNextStep(Math.random() * 1000000000)
+        setStep((prevState: number) => prevState + 1)
+        if (step === 1) {
+            setPreviousBtnName("Change email")
+        } else if (step === 2) {
+            setPreviousBtnName("Try again")
+        }
+    }
 
     const handleSendOTP = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -60,32 +71,42 @@ const ForgotPasswordForm: NextPage<Props> = ({ }) => {
             return;
         }
 
+        if (step === 1) {
+            handleNextStep()
+        }
         dispatch({ type: "SET_LOADING", payload: "" });
-        dispatch({ type: "SET_SECTION", payload: "otp" });
     };
 
     return (
-        <div className='w-full max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden'>
-            {
-                state.activeSection === "email" ? <EmailForm
-                    state={state}
-                    dispatch={dispatch}
-                    handleSendOTP={handleSendOTP}
-                /> : (
-                    state.activeSection === "otp" ? <OTPForm
-                        state={state}
-                        dispatch={dispatch}
-                        handleSendOTP={handleSendOTP} />
-                        :
-                        (
-                            state.activeSection === 'password' && <ChangePassword
-                                state={state}
-                                dispatch={dispatch}
-                                handleSendOTP={handleSendOTP} />
-                        )
-                )
-            }
-        </div>
+        <Stepper
+            initialStep={0}
+            handleNextStep={activeNextStep}
+            onStepChange={(step) => {
+                setStep(step)
+            }}
+            onFinalStepCompleted={() => console.log("All steps completed!")}
+            backButtonText={previousBtnName}
+            nextButtonText="Next"
+            disableStepIndicators
+            disableNextButton
+            disablePreviousButton={step === 4 || step === 3 && true}
+        >
+            <Step>
+                <EmailForm state={state} dispatch={dispatch} handleSendOTP={handleSendOTP} />
+            </Step>
+            <Step>
+                <OTPForm state={state} dispatch={dispatch} handleSendOTP={handleSendOTP} handleNextStep={handleNextStep} />
+            </Step>
+            <Step>
+                <ChangePassword state={state} dispatch={dispatch} handleSendOTP={handleSendOTP} handleNextStep={handleNextStep} />
+            </Step>
+            <Step>
+                <div className='flex flex-col justify-center items-center gap-2 mt-5'>
+                    <h1 className='text-xl font-medium'>Your password has been changed</h1>
+                    <a href="/signin" className='text-xl text-blue-500 hover:underline'>Login now!</a>
+                </div>
+            </Step>
+        </Stepper>
     )
 }
 

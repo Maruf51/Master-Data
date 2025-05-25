@@ -13,10 +13,11 @@ interface PropsTypes {
     state: ForgotPasswordState;
     dispatch: React.Dispatch<ForgotPasswordAction>;
     handleSendOTP: (e: React.FormEvent) => void;
+    handleNextStep: () => void;
 }
 
-const ChangePassword: NextPage<PropsTypes> = ({ state, dispatch, handleSendOTP }) => {
-    const { error, loading, email, activeSection } = state
+const ChangePassword: NextPage<PropsTypes> = ({ state, dispatch, handleSendOTP, handleNextStep }) => {
+    const { error, loading, email } = state
 
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -50,6 +51,7 @@ const ChangePassword: NextPage<PropsTypes> = ({ state, dispatch, handleSendOTP }
             setNewPassword("")
             setConfirmPassword("")
             setMessage("Password changed")
+            handleNextStep()
             setTimeout(() => {
                 setMessage("")
             }, 3000)
@@ -59,7 +61,7 @@ const ChangePassword: NextPage<PropsTypes> = ({ state, dispatch, handleSendOTP }
         dispatch({ type: "SET_LOADING", payload: "" })
     }
     return (
-        <div className={twMerge("p-8 space-y-6", activeSection !== "password" && "hidden")}>
+        <div className={twMerge("p-8 pb-0 space-y-6 password")}>
             <div className="flex flex-col items-center space-y-6">
                 {/* Logo */}
                 <div className="text-indigo-600 dark:text-indigo-400">
