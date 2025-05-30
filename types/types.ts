@@ -17,3 +17,14 @@ export type ForgotPasswordAction =
     | { type: "SET_ERROR"; payload: string }
     | { type: "SET_LOADING"; payload: string }
     | { type: "RESET" };
+
+export interface ImageTypes {
+    thumbnailUrl: string,
+    url: string,
+}
+
+export interface SessionUserTypes {
+    name: string,
+    email: string,
+    image: string
+}

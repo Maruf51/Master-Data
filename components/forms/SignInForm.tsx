@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { Github } from "lucide-react"
-import googleIcon from "@/images/icons/google.svg"
 import { signIn } from "next-auth/react"
 import { redirect } from "next/navigation"
 
@@ -62,7 +60,7 @@ export default function SignInForm({ errorMessage, callbackUrl }: { errorMessage
                     </div>
 
                     {/* Heading */}
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Sign in to your account</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Sign in to your Master Account</h1>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -127,7 +125,7 @@ export default function SignInForm({ errorMessage, callbackUrl }: { errorMessage
                     </Button>
                 </form>
 
-                <div className="relative">
+                {/* <div className="relative">
                     <div className="absolute inset-0 flex items-center">
                         <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
                     </div>
@@ -145,7 +143,7 @@ export default function SignInForm({ errorMessage, callbackUrl }: { errorMessage
                         <img src={googleIcon.src} alt="google icon" />
                         <span>Google</span>
                     </Button>
-                </div>
+                </div> */}
             </div>
 
             <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">

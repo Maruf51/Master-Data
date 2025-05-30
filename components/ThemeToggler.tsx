@@ -32,25 +32,6 @@ export default function ThemeToggler() {
             >
                 {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-            {
-                status === "authenticated" ?
-                    <Button
-                        variant="outline"
-                        onClick={() => signOut()}
-                        className="cursor-pointer duration-[0]"
-                    >
-                        Sign out
-                    </Button>
-                    :
-                    <a href="/signin">
-                        <Button
-                            variant="outline"
-                            className="cursor-pointer duration-[0]"
-                        >
-                            Sign in
-                        </Button>
-                    </a>
-            }
         </>
     )
 }

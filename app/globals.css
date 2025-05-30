@@ -3,8 +3,28 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-
+  --color-pbg1: #f3f2fc;
+  --color-pbg1-dark: #0d0f11;
+  --color-pbg2: #ffffff;
+  --color-pbg2-dark: #191d23;
+  --color-p1: black;
+  --color-p2-dark: white;
+  --color-highlight: #7b57e0;
+  --color-b1: #e5e5e4;
+  --color-b1-dark: #2c343d;
+  /* --color-shade: #f3f2fc; */
+  --color-shade: #e6e5f9;
+  --color-shade-dark: #1a1b20;
 }
+
+.primary-border {
+  @apply border-b1 dark:border-b1-dark;
+}
+
+#nprogress .bar {
+  @apply !bg-highlight
+}
+
 
 * {
   font-family: sans-serif;
@@ -219,6 +239,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

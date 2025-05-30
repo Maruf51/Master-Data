@@ -26,7 +26,7 @@ export default function RegisterForm({ errorMessage, callbackUrl }: { errorMessa
         setLoading("Registering...")
 
         // Send registration data to your backend
-        const res = await fetch("/api/auth/register", {
+        const res = await fetch("/api/user/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export default function RegisterForm({ errorMessage, callbackUrl }: { errorMessa
                     </div>
 
                     {/* Heading */}
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Join us now</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Start by Creating Your Master Account</h1>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -158,7 +158,7 @@ export default function RegisterForm({ errorMessage, callbackUrl }: { errorMessa
                     </Button>
                 </form>
 
-                <div className="relative">
+                {/* <div className="relative">
                     <div className="absolute inset-0 flex items-center">
                         <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
                     </div>
@@ -175,7 +175,7 @@ export default function RegisterForm({ errorMessage, callbackUrl }: { errorMessa
                         <img src={googleIcon.src} alt="google icon" />
                         <span>Google</span>
                     </Button>
-                </div>
+                </div> */}
             </div>
 
             <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">

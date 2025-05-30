@@ -3,17 +3,11 @@
 import type React from "react"
 
 import { useState } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { Github } from "lucide-react"
-import googleIcon from "@/images/icons/google.svg"
-import { signIn } from "next-auth/react"
-import { redirect } from "next/navigation"
 
-export default function UpdatePasswordForm({ havePassword, email }: { havePassword: boolean, email: string }) {
+export default function UpdatePasswordForm({ havePassword, email, name }: { havePassword: boolean, email: string, name: string }) {
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -30,7 +24,7 @@ export default function UpdatePasswordForm({ havePassword, email }: { havePasswo
         if (newPassword === confirmPassword) {
             const data = { havePassword, newPassword, oldPassword, email }
 
-            const response = await fetch("/api/update-password", {
+            const response = await fetch("/api/user/update-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +73,7 @@ export default function UpdatePasswordForm({ havePassword, email }: { havePasswo
                     </div>
 
                     {/* Heading */}
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Update your password</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Update your password <br /> {name}</h1>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
