@@ -6,12 +6,10 @@ import { redirect } from "next/navigation";
 import nProgress from "nprogress";
 import { twMerge } from "tailwind-merge";
 import activeIcon from "@/images/icons/active.svg"
+import { icons } from "@/data/data";
+import { IconTypes } from "@/types/types";
 
-const icons: any = {
-    dashboard: LayoutDashboard,
-    signout: LogOut,
-    profile: UserPen,
-}
+
 
 interface NavItemTypes {
     icon: string;
@@ -20,7 +18,7 @@ interface NavItemTypes {
     sidebarToggler: () => void;
 }
 const SidebarItem = ({ icon, name, route, sidebarToggler }: NavItemTypes) => {
-    const Icon = icons[icon] || icons.dashboard
+    const Icon = icons.find((ic: IconTypes) => ic.name === icon)?.icon || icons[5].icon
     return (
         <div onClick={() => {
             if (icon === "signout") {
@@ -33,7 +31,7 @@ const SidebarItem = ({ icon, name, route, sidebarToggler }: NavItemTypes) => {
                 sidebarToggler()
                 redirect(`/${name}`);
             }
-        }} className={twMerge("relative flex gap-3 items-center cursor-pointer active-nav px-5 py-3 rounded-sm overflow-hidden", route === name && "bg-shade dark:bg-shade-dark")}>
+        }} className={twMerge("relative flex gap-3 items-center cursor-pointer active-nav px-5 py-3 rounded-sm overflow-hidden shrink-0", route === name && "bg-shade dark:bg-shade-dark")}>
             {
                 name === route && <img src={activeIcon.src} className="absolute top-0 left-0 h-full blur-[5px]" alt="active icon" />
             }

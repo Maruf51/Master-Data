@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import Image from 'next/image'
-import { SessionUserTypes } from '@/types/types'
+import { UserTypes } from '@/types/types'
 
 interface Props {
-    user: SessionUserTypes
+    user: UserTypes
 }
 
 const ProfileDropdown: NextPage<Props> = ({ user }) => {

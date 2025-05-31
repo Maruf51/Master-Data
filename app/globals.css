@@ -15,10 +15,16 @@
   /* --color-shade: #f3f2fc; */
   --color-shade: #e6e5f9;
   --color-shade-dark: #1a1b20;
+  --color-tsecondary: #6B7280;
+  --color-tsecondary-dark: #9CA3AF;
 }
 
 .primary-border {
   @apply border-b1 dark:border-b1-dark;
+}
+
+.secondary-text {
+  @apply text-tsecondary dark:text-tsecondary-dark
 }
 
 #nprogress .bar {

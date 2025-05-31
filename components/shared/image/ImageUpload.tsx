@@ -10,7 +10,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from '@/components/ui/input';
-import { ImageTypes, SessionUserTypes } from '@/types/types';
+import { ImageTypes, UserTypes } from '@/types/types';
 import {
     ImageKitAbortError,
     ImageKitInvalidRequestError,
@@ -25,7 +25,7 @@ import { useRouter } from 'next/navigation';
 
 interface Props {
     children: React.ReactNode;
-    user: SessionUserTypes;
+    user: UserTypes;
 }
 
 const ImageUpload: NextPage<Props> = ({ children, user }) => {

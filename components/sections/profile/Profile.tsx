@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { Camera } from 'lucide-react'
 import ImageUpload from '@/components/shared/image/ImageUpload'
-import { SessionUserTypes } from '@/types/types'
+import { UserTypes } from '@/types/types'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 
 
 interface Props {
-  user: SessionUserTypes;
+  user: UserTypes;
 }
 
 const Profile: NextPage<Props> = ({ user }) => {
@@ -118,7 +118,7 @@ const Profile: NextPage<Props> = ({ user }) => {
 export default Profile
 
 interface InputTypes {
-  name: keyof SessionUserTypes
+  name: keyof UserTypes
   placeholder: string
   type?: string
   disabled?: boolean

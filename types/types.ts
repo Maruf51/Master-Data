@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export interface SearchParamsTypes {
     searchParams: Promise<{ [key: string]: string | undefined }>
 }
@@ -23,8 +25,21 @@ export interface ImageTypes {
     url: string,
 }
 
-export interface SessionUserTypes {
+export interface UserTypes {
     name: string,
     email: string,
-    image: string
+    image: string,
+}
+
+export interface IconTypes {
+    name: string;
+    icon: LucideIcon;
+};
+
+export interface ProjectTypes {
+    uid: string,
+    name: string,
+    description?: string,
+    icon: string,
+    email: string,
 }
